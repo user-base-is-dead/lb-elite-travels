@@ -12,7 +12,12 @@ export default function Loader() {
   const innerRef = useRef(null);
   const loaderRef = useRef(null);
 
+
   useEffect(() => {
+    // Stop scroll while loading
+    window.dispatchEvent(new Event("lenis:stop"));
+    document.body.style.overflow = "hidden";
+
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
       onComplete: () => setIntroDone(true)
@@ -71,6 +76,8 @@ export default function Loader() {
       const tl = gsap.timeline({
         onComplete: () => {
           if (loaderRef.current) loaderRef.current.style.display = "none";
+          window.dispatchEvent(new Event("lenis:start"));
+          document.body.style.overflow = "";
           window.dispatchEvent(new Event("loader:complete"));
         }
       });
