@@ -28,12 +28,6 @@ function NotFound() {
 
 export default function App() {
   const { pathname } = useLocation();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(t);
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,7 +35,7 @@ export default function App() {
 
   return (
     <div className="app grain">
-      {loading && <Loader />}
+      <Loader />
       <CustomCursor />
       <ScrollProgress />
       <SmoothScroll>
