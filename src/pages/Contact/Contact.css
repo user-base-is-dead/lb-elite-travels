@@ -1,0 +1,17 @@
+.contact { background: var(--color-cream); color: var(--color-ink); min-height: 100vh; }
+.contact__hero { padding: 11rem 0 3rem; }
+.contact__eyebrow { color: var(--color-sienna); }
+.contact__title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(3.5rem, 12vw, 11rem);
+  line-height: 0.9;
+  margin-top: 1.5rem;
+}
+.contact__body { padding-bottom: var(--sp-8); }
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+@media (min-width: 900px) { .contact__grid { grid-template-columns: 4fr 8fr; } }

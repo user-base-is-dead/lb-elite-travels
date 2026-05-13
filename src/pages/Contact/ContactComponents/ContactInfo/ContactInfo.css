@@ -1,0 +1,4 @@
+.cinfo { display: flex; flex-direction: column; gap: 2.5rem; }
+.cinfo__label { color: var(--color-sienna); margin-bottom: 0.5rem; }
+.cinfo__value { font-family: var(--font-serif); font-size: 1.5rem; line-height: 1.2; white-space: pre-line; }
+.cinfo__small { color: rgba(31,21,14,0.7); }

@@ -1,0 +1,50 @@
+:root {
+  --color-cream: #f5ede2;
+  --color-cream-soft: #faf4ea;
+  --color-ink: #1f150e;
+  --color-ink-soft: #2a1c12;
+  --color-sienna: #a0522d;
+  --color-copper: #cd7f32;
+  --color-gold: #e8c07a;
+
+
+  --bg: var(--color-cream);
+  --fg: var(--color-ink);
+
+
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+
+
+  --fs-label: 0.7rem;
+  --fs-body: 1rem;
+  --fs-lead: 1.25rem;
+  --fs-h3: clamp(1.75rem, 3vw, 2.5rem);
+  --fs-h2: clamp(2.5rem, 6vw, 5rem);
+  --fs-h1: clamp(3rem, 12vw, 12rem);
+
+
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 1rem;
+  --sp-4: 1.5rem;
+  --sp-5: 2rem;
+  --sp-6: 3rem;
+  --sp-7: 5rem;
+  --sp-8: 8rem;
+
+
+  --max-w: 1600px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --header-h: 5rem;
+
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 0.25s;
+  --t-base: 0.45s;
+  --t-slow: 1s;
+
+
+  --hairline: 1px solid rgba(31, 21, 14, 0.15);
+  --hairline-light: 1px solid rgba(245, 237, 226, 0.18);
+}

@@ -1,0 +1,27 @@
+.story { padding: 0 0 6rem; }
+.story__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+@media (min-width: 900px) { .story__inner { grid-template-columns: 5fr 7fr; } }
+.story__visual img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.story__copy { padding-top: 0; }
+@media (min-width: 900px) { .story__copy { padding-top: 5rem; } }
+.story__eyebrow { color: var(--color-sienna); }
+.story__lede {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  line-height: 1.25;
+  margin-top: 1.5rem;
+}
+.story__p {
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: rgba(31,21,14,0.7);
+  margin-top: 1.5rem;
+}

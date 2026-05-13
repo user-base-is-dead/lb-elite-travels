@@ -1,0 +1,11 @@
+.about-hero { padding: 11rem 0 5rem; }
+.about-hero__eyebrow { color: var(--color-sienna); }
+.about-hero__line {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 12vw, 11rem);
+  line-height: 0.9;
+  margin-top: 1.5rem;
+}
+.about-hero__line--italic { font-style: italic; }
+.about-hero__word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.about-hero__word > span { display: inline-block; transform: translateY(110%); will-change: transform; }
