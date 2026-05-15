@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLoaderComplete } from "../../../../hooks/useLoaderComplete.js";
 import "./StatsCounter.css";
 
 const stats = [
@@ -11,8 +12,10 @@ const stats = [
 
 export default function StatsCounter() {
   const ref = useRef(null);
+  const loaderReady = useLoaderComplete();
 
   useEffect(() => {
+    if (!loaderReady) return undefined;
     const ctx = gsap.context(() => {
       gsap.utils.toArray("[data-count]").forEach((el) => {
         const target = Number(el.dataset.count);
@@ -30,7 +33,7 @@ export default function StatsCounter() {
       });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [loaderReady]);
 
   return (
     <section ref={ref} className="stats">

@@ -74,10 +74,14 @@ export default function Loader() {
 
     const triggerExit = () => {
       const tl = gsap.timeline({
+        onStart: () => {
+          window.dispatchEvent(new Event("loader:exit"));
+        },
         onComplete: () => {
           if (loaderRef.current) loaderRef.current.style.display = "none";
           window.dispatchEvent(new Event("lenis:start"));
           document.body.style.overflow = "";
+          window.__LB_LOADER_COMPLETE__ = true;
           window.dispatchEvent(new Event("loader:complete"));
         }
       });

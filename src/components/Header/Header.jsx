@@ -18,6 +18,12 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    document.body.style.overflow = "";
+    setOpen(false);
+    window.dispatchEvent(new Event("lenis:start"));
+  }, [pathname]);
+
+  useEffect(() => {
     if (window.innerWidth > 899) return;
 
     const links = navRef.current?.querySelectorAll(".header__link");

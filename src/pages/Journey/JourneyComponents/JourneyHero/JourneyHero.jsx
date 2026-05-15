@@ -1,11 +1,25 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+import { debounce, prefersReducedMotion } from "../../../../utils/performanceUtils.js";
+import { useLoaderComplete } from "../../../../hooks/useLoaderComplete.js";
 import "./JourneyHero.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function JourneyHero() {
   const ref = useRef(null);
+  const ledeRef = useRef(null);
+  const loaderReady = useLoaderComplete();
 
   useEffect(() => {
+    if (!loaderReady) return undefined;
+    const reduced = prefersReducedMotion();
+    let ledeSplit = null;
+    let ledeTween = null;
+    let ro = null;
+
     const ctx = gsap.context(() => {
       gsap.from(".jhero__line > span > span", {
         yPercent: 110,
@@ -14,17 +28,71 @@ export default function JourneyHero() {
         stagger: 0.07,
         delay: 0.1,
       });
-      gsap.from(".jhero__meta > *", {
+      gsap.from(".jhero__row > div", {
         opacity: 0,
         y: 20,
         duration: 0.9,
         ease: "expo.out",
         stagger: 0.08,
-        delay: 0.6,
+        delay: 0.65,
       });
     }, ref);
-    return () => ctx.revert();
-  }, []);
+
+    const setupLedeLines = () => {
+      ledeTween?.scrollTrigger?.kill();
+      ledeTween?.kill();
+      ledeSplit?.revert();
+      ledeSplit = null;
+      if (reduced || !ledeRef.current || !ref.current) return;
+
+      ledeSplit = new SplitType(ledeRef.current, {
+        types: "lines",
+        lineClass: "jhero__lede-line",
+        tagName: "span",
+      });
+
+      gsap.set(ledeSplit.lines, { yPercent: 100, opacity: 0.25 });
+
+      ledeTween = gsap.to(ledeSplit.lines, {
+        yPercent: 0,
+        opacity: 1,
+        ease: "none",
+        stagger: 0.14,
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top top",
+          end: "+=48%",
+          scrub: 0.55,
+        },
+      });
+    };
+
+    if (!reduced) {
+      setupLedeLines();
+      const onResize = debounce(() => {
+        setupLedeLines();
+        ScrollTrigger.refresh();
+      }, 280);
+      ro = new ResizeObserver(onResize);
+      if (ref.current) ro.observe(ref.current);
+    } else if (ledeRef.current) {
+      gsap.from(ledeRef.current, {
+        opacity: 0,
+        y: 14,
+        duration: 0.75,
+        delay: 0.55,
+        ease: "power2.out",
+      });
+    }
+
+    return () => {
+      ro?.disconnect();
+      ledeTween?.scrollTrigger?.kill();
+      ledeTween?.kill();
+      ledeSplit?.revert();
+      ctx.revert();
+    };
+  }, [loaderReady]);
 
   const lines = ["Four chapters,", "one country."];
   return (
@@ -50,7 +118,7 @@ export default function JourneyHero() {
         ))}
 
         <div className="jhero__meta">
-          <p className="jhero__lede">
+          <p ref={ledeRef} className="jhero__lede">
             Heritage to Himalayas, backwaters to wild grass — four ways into the
             subcontinent, each shaped slowly and only for you.
           </p>

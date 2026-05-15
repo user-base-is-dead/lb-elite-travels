@@ -3,10 +3,10 @@ import { useScrollAnimation } from "../../../../hooks/useScrollAnimation.js";
 import "./TeamSection.css";
 
 const team = [
-  { name: "Lakshmi Bhatt", role: "Founder · Trip Architect", initials: "LB" },
-  { name: "Arjun Mehra", role: "Himalayan routes", initials: "AM" },
-  { name: "Priya Iyer", role: "South India lead", initials: "PI" },
-  { name: "Vikram Singh", role: "Wildlife & safari", initials: "VS" },
+  { name: "Debasrit Mishra", role: "Founder · Indian Gamblers", initials: "LB" },
+  { name: "Ravi Sir", role: "Himalayan routes", initials: "AM" },
+  { name: "Vani Mam", role: "India Authority", initials: "PI" },
+  { name: "Priyansu HR", role: "HR (Huge Return)", initials: "VS" },
 ];
 
 export default function TeamSection() {

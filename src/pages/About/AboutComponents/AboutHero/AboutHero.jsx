@@ -1,10 +1,14 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useLoaderComplete } from "../../../../hooks/useLoaderComplete.js";
 import "./AboutHero.css";
 
 export default function AboutHero() {
   const ref = useRef(null);
+  const loaderReady = useLoaderComplete();
+
   useEffect(() => {
+    if (!loaderReady) return undefined;
     const ctx = gsap.context(() => {
       gsap.from(".about-hero__line > span > span", {
         yPercent: 110,
@@ -15,7 +19,7 @@ export default function AboutHero() {
       });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [loaderReady]);
 
   const lines = ["A studio,", "not a travel desk."];
   return (

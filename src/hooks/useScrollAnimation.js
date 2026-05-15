@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLoaderComplete } from "./useLoaderComplete.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function useScrollAnimation(scopeRef, selector = ".fade-up", options = {}) {
+  const loaderReady = useLoaderComplete();
+
   useEffect(() => {
+    if (!loaderReady) return undefined;
     const scope = scopeRef?.current || document;
     const ctx = gsap.context(() => {
       gsap.utils.toArray(selector).forEach((el) => {
@@ -23,11 +27,14 @@ export function useScrollAnimation(scopeRef, selector = ".fade-up", options = {}
       });
     }, scope);
     return () => ctx.revert();
-  }, [scopeRef, selector, options.y, options.duration, options.ease, options.start]);
+  }, [loaderReady, scopeRef, selector, options.y, options.duration, options.ease, options.start]);
 }
 
 export function useClipReveal(scopeRef, selector = ".clip-reveal") {
+  const loaderReady = useLoaderComplete();
+
   useEffect(() => {
+    if (!loaderReady) return undefined;
     const scope = scopeRef?.current || document;
     const ctx = gsap.context(() => {
       gsap.utils.toArray(selector).forEach((el) => {
@@ -40,5 +47,5 @@ export function useClipReveal(scopeRef, selector = ".clip-reveal") {
       });
     }, scope);
     return () => ctx.revert();
-  }, [scopeRef, selector]);
+  }, [loaderReady, scopeRef, selector]);
 }

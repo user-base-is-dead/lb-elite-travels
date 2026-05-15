@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ParticleField from "../../../../components/ParticleField/ParticleField.jsx";
+import { useLoaderComplete } from "../../../../hooks/useLoaderComplete.js";
 import "./HeroSection.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,8 +11,10 @@ export default function HeroSection() {
   const sectionRef = useRef(null);
   const imgRef = useRef(null);
   const headlineRef = useRef(null);
+  const loaderReady = useLoaderComplete();
 
   useEffect(() => {
+    if (!loaderReady) return undefined;
     const ctx = gsap.context(() => {
       if (imgRef.current) {
         gsap.to(imgRef.current, {
@@ -23,11 +26,23 @@ export default function HeroSection() {
       }
       if (headlineRef.current) {
         const words = headlineRef.current.querySelectorAll(".hero__word > span");
-        gsap.from(words, { yPercent: 110, duration: 1.1, ease: "expo.out", stagger: 0.07, delay: 0.2 });
+        const leadText = headlineRef.current.querySelector(".hero__lead");
+        
+        const tl = gsap.timeline();
+        
+        tl.fromTo(words, 
+          { yPercent: 110, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 1.2, ease: "expo.out", stagger: 0.05 }
+        )
+        .fromTo(leadText,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+          "-=0.8"
+        );
       }
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [loaderReady]);
 
   return (
     <section ref={sectionRef} className="hero">

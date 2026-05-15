@@ -13,9 +13,19 @@
 .jhero__meta { margin-top: 4rem; display: flex; flex-direction: column; gap: 3rem; }
 .jhero__lede {
   max-width: 38rem;
+  width: 100%;
   font-size: 1.125rem;
   font-weight: 300;
   color: rgba(31, 21, 14, 0.7);
+  font-kerning: none;
+}
+.jhero__lede-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .jhero__lede-line { overflow: visible; padding-bottom: 0; }
 }
 .jhero__row {
   display: grid;

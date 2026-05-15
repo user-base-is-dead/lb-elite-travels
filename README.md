@@ -10,7 +10,7 @@ npm run dev
 ```
 
 ## Structure
-- `src/components/` — shared (Header, Footer, Loader, CustomCursor, ScrollProgress, ParticleField, SmoothScroll)
+- `src/components/` — shared (Header, Footer, Loader, CustomCursor, ParticleField, SmoothScroll)
 - `src/pages/` — Home, About, Destinations, Services, Contact (each with its own sub-components)
 - `src/hooks/` — useDeviceDetect, useScrollAnimation
 - `src/utils/` — performanceUtils

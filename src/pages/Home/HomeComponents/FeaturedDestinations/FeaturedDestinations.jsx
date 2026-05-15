@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
+import { useLoaderComplete } from "../../../../hooks/useLoaderComplete.js";
 import { useClipReveal } from "../../../../hooks/useScrollAnimation.js";
 import "./FeaturedDestinations.css";
 
@@ -13,16 +14,18 @@ const featured = [
 
 export default function FeaturedDestinations() {
   const ref = useRef(null);
+  const loaderReady = useLoaderComplete();
   useClipReveal(ref);
 
   useEffect(() => {
+    if (!loaderReady) return undefined;
     const ctx = gsap.context(() => {
       gsap.utils.toArray(".feat__head .fade-up").forEach((el) =>
         gsap.from(el, { y: 30, opacity: 0, duration: 1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } })
       );
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [loaderReady]);
 
   return (
     <section ref={ref} className="feat">

@@ -1,14 +1,34 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import JourneyHero from "./JourneyComponents/JourneyHero/JourneyHero.jsx";
 import JourneyChapter from "./JourneyComponents/JourneyChapter/JourneyChapter.jsx";
 import { destinations } from "../../data/destinations.js";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation.js";
+import { useLoaderComplete } from "../../hooks/useLoaderComplete.js";
 import "./Journey.css";
 
 export default function Journey() {
   const ref = useRef(null);
+  const loaderReady = useLoaderComplete();
   useScrollAnimation(ref);
+
+  useEffect(() => {
+    if (!loaderReady) return undefined;
+    const notify = () => window.dispatchEvent(new CustomEvent("lenis:refresh"));
+    notify();
+    const rafId = requestAnimationFrame(() => notify());
+
+    const root = ref.current;
+    const imgs = root ? Array.from(root.querySelectorAll("img")) : [];
+    imgs.forEach((img) => {
+      if (!img.complete) img.addEventListener("load", notify);
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      imgs.forEach((img) => img.removeEventListener("load", notify));
+    };
+  }, [loaderReady]);
 
   return (
     <div ref={ref} className="journey page">

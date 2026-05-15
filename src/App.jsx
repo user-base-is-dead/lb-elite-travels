@@ -1,12 +1,11 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import "./App.css";
 
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Loader from "./components/Loader/Loader.jsx";
 import CustomCursor from "./components/CustomCursor/CustomCursor.jsx";
-import ScrollProgress from "./components/ScrollProgress/ScrollProgress.jsx";
 import SmoothScroll from "./components/SmoothScroll/SmoothScroll.jsx";
 
 import Home from "./pages/Home/Home.jsx";
@@ -27,17 +26,10 @@ function NotFound() {
 }
 
 export default function App() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
   return (
     <div className="app grain">
       <Loader />
       <CustomCursor />
-      <ScrollProgress />
       <SmoothScroll>
         <Header />
         <main>
